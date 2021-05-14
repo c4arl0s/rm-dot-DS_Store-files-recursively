@@ -1,6 +1,3 @@
-# RemoveDotDS_StoreFileRecursiveScript
-
-```bash
 #!/bin/bash
 # it finds .DS_Store files, It deletes them if it is required.
 
@@ -10,4 +7,3 @@ find . -name "*" -type f | sort -n -r | grep ".DS_Store" | while read dsStoreFil
 do
        rm $dsStoreFile
 done
-```
