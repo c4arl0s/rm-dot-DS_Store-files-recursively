@@ -1,13 +1,16 @@
-# RemoveDotDS_StoreFileRecursiveScript
+# Remove .DS_Store File Recursively Script
 
 ```bash
 #!/bin/bash
-# it finds .DS_Store files, It deletes them if it is required.
+# it finds all .DS_Store files in the current directory and deletes them
 
 echo "finding .DS_Store files ..."
-numberFiles=0
+counter=0
+find . -name "*" -type f | sort -n -r | grep ".DS_Store"
 find . -name "*" -type f | sort -n -r | grep ".DS_Store" | while read dsStoreFile
 do
-       rm $dsStoreFile
+    let counter++
+    echo "$counter deleting ... $dsStoreFile"
+    rm $dsStoreFile
 done
 ```
