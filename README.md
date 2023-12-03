@@ -16,13 +16,15 @@ $ ./rmDotDSStoreScript.sh
 #!/bin/bash
 # it finds all .DS_Store files in the current directory and deletes them
 
-echo "finding .DS_Store files ..."
-COUNTER=0
-storeFiles=$(find . -name "*" -type f | sort -n -r | grep ".DS_Store" | tee /dev/tty)
-echo $storeFiles | sort -n -r | grep ".DS_Store" | while read dsStoreFile
-do
-    let COUNTER=$COUNTER+1
-    echo "$COUNTER deleting ... $dsStoreFile"
-    rm $dsStoreFile
+DSSTOREFILE=".DS_Store"
+
+storeFiles=$(find . -name "*" -type f | sort -n -r | grep $DSSTOREFILE | tee /dev/tty)
+
+[ ! -z "$storeFiles" ] && { echo "$DSSTOREFILE files were found"; } || { echo "🔴 $DSSTOREFILE files were not found"; exit 1; }
+
+echo $storeFiles | sort -n -r | grep ".DS_Store" | while read dsStoreFile; do
+    rm $dsStoreFile && echo "Files were deleted" || { echo "🔴 Error while deleting files"; exit 1; }
 done
+
+exit 0
 ```
