@@ -14,17 +14,39 @@ $ ./rmDotDSStoreScript.sh
 
 ```bash
 #!/bin/bash
+#
 # it finds all .DS_Store files in the current directory and deletes them
 
-DSSTOREFILE=".DS_Store"
+ds_store_file=".DS_Store"
 
-storeFiles=$(find . -name "*" -type f | sort -n -r | grep $DSSTOREFILE | tee /dev/tty)
+#######################################
+# A function to print out error messages 
+# Globals:
+#   
+# Arguments:
+#   None
+#######################################
+function error() {
+  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $*" >&2
+}
 
-[ ! -z "$storeFiles" ] && { echo "$DSSTOREFILE files were found"; } || { echo "🔴 $DSSTOREFILE files were not found"; exit 1; }
+store_files=$(find . -name "*" -type f \
+  | sort -n -r \
+  | grep ${ds_store_file} \
+  | tee /dev/tty)
 
-echo $storeFiles | sort -n -r | grep ".DS_Store" | while read dsStoreFile; do
-    rm $dsStoreFile && echo "Files were deleted" || { echo "🔴 Error while deleting files"; exit 1; }
-done
+[ ! -z "${store_files}" ] \
+  && { echo "${ds_store_file} files were found"; } \
+  || { error "🔴 ${ds_store_file} files were not found"; exit 1; }
+
+echo ${store_files} \
+  | sort -n -r \
+  | grep ".DS_Store" \
+  | while read ds_store_file; do
+    rm ${ds_store_file} \
+    && echo "Files were deleted" \
+    || { error "🔴 Error while deleting files"; exit 1; }
+  done
 
 exit 0
 ```
