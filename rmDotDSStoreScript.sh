@@ -2,7 +2,9 @@
 #
 # it finds all .DS_Store files in the current directory and deletes them
 
-ds_store_file=".DS_Store"
+readonly ds_store_file_name='.DS_Store'
+success_msg="🟢 Files: ${ds_store_file_name} were deleted"
+error_msg="${ds_store_file_name} files were not found"
 
 #######################################
 # A function to print out error messages 
@@ -12,25 +14,20 @@ ds_store_file=".DS_Store"
 #   None
 #######################################
 function error() {
-  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $*" >&2
+  echo "[🔴 $(date +'%Y-%m-%dT%H:%M:%S%z')]: $*" >&2
 }
 
 store_files=$(find . -name "*" -type f \
   | sort -n -r \
-  | grep ${ds_store_file} \
+  | grep ${ds_store_file_name} \
   | tee /dev/tty)
 
-[ ! -z "${store_files}" ] \
-  && { echo "${ds_store_file} files were found"; } \
-  || { error "🔴 ${ds_store_file} files were not found"; exit 1; }
+[ -n "${store_files}" ] \
+  || { error ${error_msg}; exit 1; }
 
 echo ${store_files} \
   | sort -n -r \
-  | grep ".DS_Store" \
-  | while read ds_store_file; do
-    rm ${ds_store_file} \
-    && echo "Files were deleted" \
-    || { error "🔴 Error while deleting files"; exit 1; }
-  done
-
-exit 0
+  | while read store_file; do
+      rm ${store_file} 
+      echo "${store_file} were deleted" 
+    done
