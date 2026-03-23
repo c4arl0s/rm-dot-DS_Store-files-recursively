@@ -7,7 +7,7 @@ It removes the annoying .DS_Store files in the current directory.
 You just placed in the directory you need to remove those files, then execute the script:
 
 ```console
-$ ./rmDotDSStoreScript.sh
+$ ./remove-dot-ds-store-files.sh
 ```
 
 # Code
