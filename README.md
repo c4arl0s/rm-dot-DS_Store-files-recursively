@@ -1,49 +1,32 @@
-# Remove .DS_Store File Recursively Script
+# Remove `.DS_Store` Files Recursively
 
-It removes the annoying .DS_Store files in the current directory.
+This project provides a shell script that finds and removes `.DS_Store` files recursively from the current directory.
 
-# How to use it ?
+## Install
 
-You just placed in the directory you need to remove those files, then execute the script:
+From the project root, run:
 
 ```console
-$ ./remove-dot-ds-store-files.sh
+./install.sh
 ```
 
-# Code
+The installer copies `remove-dot-ds-store-files.sh` to `/usr/local/bin/rm-dot-ds-store-files`, so you can run it globally.
 
-```bash
-#!/bin/bash
-#
-# it finds all .DS_Store files in the current directory and deletes them
+## Usage
 
-readonly ds_store_file_name='.DS_Store'
-success_msg="🟢 Files: ${ds_store_file_name} were deleted"
-error_msg="${ds_store_file_name} files were not found"
+Navigate to the directory you want to clean, then run:
 
-#######################################
-# A function to print out error messages 
-# Globals:
-#   
-# Arguments:
-#   None
-#######################################
-function error() {
-  echo "[🔴 $(date +'%Y-%m-%dT%H:%M:%S%z')]: $*" >&2
-}
-
-store_files=$(find . -name "*" -type f \
-  | sort -n -r \
-  | grep ${ds_store_file_name} \
-  | tee /dev/tty)
-
-[ -n "${store_files}" ] \
-  || { error ${error_msg}; exit 1; }
-
-echo ${store_files} \
-  | sort -n -r \
-  | while read store_file; do
-      rm ${store_file} 
-      echo "${store_file} were deleted" 
-    done
+```console
+rm-dot-ds-store-files
 ```
+
+If you prefer not to install globally, run the script directly from the repository:
+
+```console
+./remove-dot-ds-store-files.sh
+```
+
+## Notes
+
+- You may be asked for your password during installation because `sudo` is used to write to `/usr/local/bin`.
+- The command exits with an error if no `.DS_Store` files are found.
