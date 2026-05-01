@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-readonly SOURCE_SCRIPT="remove-dot-ds-store-files.sh"
+readonly SOURCE_SCRIPT="dscleaner.sh"
 readonly INSTALL_DIR="/usr/local/bin"
-readonly TARGET_COMMAND="remove-dot-ds-store-files"
+readonly TARGET_COMMAND="dscleaner"
 readonly TARGET_PATH="${INSTALL_DIR}/${TARGET_COMMAND}"
 
 if [[ ! -f "${SOURCE_SCRIPT}" ]]; then

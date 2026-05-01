@@ -17,13 +17,7 @@ The installer copies `remove-dot-ds-store-files.sh` to `/usr/local/bin/rm-dot-ds
 Navigate to the directory you want to clean, then run:
 
 ```console
-rm-dot-ds-store-files
-```
-
-If you prefer not to install globally, run the script directly from the repository:
-
-```console
-./remove-dot-ds-store-files.sh
+dscleaner
 ```
 
 ## Notes
